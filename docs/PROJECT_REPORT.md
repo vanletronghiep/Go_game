@@ -363,7 +363,6 @@ The architecture of our Go project expands on these starter concepts in several 
 - **Separation of Rule Verification from GUI:** Move legality is completely isolated in `Position::checkMove`. The GUI never decides whether a suicide or ko violation has occurred; it simply queries the engine.
 - **Asynchronous AI Processing (`std::future`):** Running deep Minimax searches directly on the UI thread causes noticeable frame drops. We decouple the AI into an asynchronous worker (`AIPlayer`) using `std::async(std::launch::async, ...)` and a thread-safe `std::atomic<bool>` cancellation flag, maintaining a steady 60 FPS in the interface.
 - **Zobrist Position Hashing:** Rather than comparing whole $19 \times 19$ boards to check the positional superko rule, every move modifies a 64-bit Zobrist key using XOR operations. History lookups run in $O(1)$ time per move.
-- **Procedural Audio Synthesis:** To avoid external copyright issues, audio files are mathematically generated through frequency modulation, Karplus-Strong string synthesis, and additive wave modeling.
 
 ---
 

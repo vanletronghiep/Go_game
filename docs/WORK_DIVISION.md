@@ -42,7 +42,7 @@
 - Stone rendering engine featuring Classic, Modern, and Cartoon design styles (`Theme.h`, `Theme.cpp`).
 - Modal dialogs for New Game configuration, Save/Load file management, Settings, and Scoring review (`Screens.h`, `Screens.cpp`).
 - Reusable UI widgets: buttons, sliders, segmented controls, text inputs, and notifications (`Gui.h`, `Gui.cpp`).
-- Procedural audio asset generation and audio manager integration (`Audio.h`, `Audio.cpp`).
+- Audio manager integration (`Audio.h`, `Audio.cpp`).
 
 ### Member 4: Persistence, Testing & Documentation
 - Save and load serialization with versioned plain-text schema and strict validation (`SaveManager.h`, `SaveManager.cpp`).
