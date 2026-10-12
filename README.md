@@ -1,8 +1,44 @@
-# Go Game - AI Agent Build Instructions
+# Go Game - Desktop Application & Build Guide
 
-> **Primary instruction for the coding agent:** Build a complete, playable Go game in C++ that satisfies this document and the project brief in `Project - Go game.pdf`. Work in the repository, create and edit the actual files, compile the application, run the tests, and fix problems before reporting completion. Do not stop after producing a plan, pseudocode, or a list of suggested changes.
+## Quick Start & Verification
 
-## 1. Project goal
+### Prerequisites
+- **Compiler:** GCC 13+ / MinGW-w64 (tested on GCC 16.1.0 UCRT64), Clang 16+, or MSVC 2022 (C++20 compliant).
+- **Build System:** CMake 3.20+ and Ninja (or mingw32-make).
+- **Multimedia Library:** SFML 3.0.2 (Graphics and Audio components).
+
+### Build Commands
+From the project root directory:
+```powershell
+# 1. Configure CMake with Ninja
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+# 2. Compile GoGame and game_tests
+cmake --build build --config Release
+```
+
+### Execution Commands
+```powershell
+# Run the automated test suite (headless, 30 tests):
+./build/game_tests.exe
+
+# Launch the desktop graphical game:
+./build/GoGame.exe
+```
+
+### Controls & In-Game Guide
+- **Placing Stones:** Left-click on any empty grid intersection. A ghost preview shows the stone position when legal.
+- **Passing:** Click the **Pass** button. Two consecutive passes automatically enter the end-game scoring review.
+- **Scoring Review:** In scoring review, click on stone groups on the board to toggle dead/alive status. Click **Accept Score** to finalize or **Resume Game** to continue play.
+- **Undo / Redo:** Use the **Undo** and **Redo** buttons. In Player vs AI mode, Undo steps back the human move and AI response as an atomic exchange.
+- **Save / Load:** Click **Save** to serialize the full game state to `saves/<filename>.gosave`. Click **Load** to open prior games.
+- **Settings:** Customize board wood theme, stone style (Classic, Modern, Cartoon), sound/music themes, and volume levels.
+- **Reset / New Game:** Start a new game with custom board dimensions (19x19, 13x13, 9x9), mode, and AI difficulty.
+
+---
+
+## AI Agent Build Instructions
+
 
 Create a desktop Go game with a graphical interface. The game must support:
 

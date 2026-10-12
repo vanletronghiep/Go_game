@@ -1,0 +1,5 @@
+D:/APCS/University/CS160/Project/build-core/CMakeFiles/gocore.dir
+D:/APCS/University/CS160/Project/build-core/CMakeFiles/game_tests.dir
+D:/APCS/University/CS160/Project/build-core/CMakeFiles/test.dir
+D:/APCS/University/CS160/Project/build-core/CMakeFiles/edit_cache.dir
+D:/APCS/University/CS160/Project/build-core/CMakeFiles/rebuild_cache.dir

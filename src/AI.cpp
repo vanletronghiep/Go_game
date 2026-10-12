@@ -28,9 +28,9 @@ SearchLimits limitsFor(Difficulty difficulty, int boardSize)
 {
     if (difficulty == Difficulty::Hard) {
         const bool largeBoard = boardSize >= 19;
-        return {largeBoard ? 12 : 14, 7, 4, std::chrono::milliseconds(largeBoard ? 3000 : 2500), true, 0.0};
+        return {largeBoard ? 14 : 16, 8, 6, std::chrono::milliseconds(largeBoard ? 3000 : 2500), true, 0.0};
     }
-    return {8, 6, 2, std::chrono::milliseconds(1500), false, 1.2};
+    return {10, 6, 2, std::chrono::milliseconds(1500), false, 1.2};
 }
 
 struct Node {
@@ -186,9 +186,9 @@ AIDecision Searcher::decideBySearch()
     std::uniform_real_distribution<double> noise(-limits_.noise, limits_.noise);
     Point bestPoint = rootCandidates.front().point;
     int completedDepth = 0;
-    const int firstDepth = limits_.useAlphaBeta ? 1 : limits_.maxDepth;
+    const int firstDepth = limits_.useAlphaBeta ? 2 : limits_.maxDepth;
 
-    for (int depth = firstDepth; depth <= limits_.maxDepth; ++depth) {
+    for (int depth = firstDepth; depth <= limits_.maxDepth; depth += 2) {
         double alpha = -infinity;
         double bestValue = -infinity;
         std::size_t bestIndex = 0;
@@ -382,7 +382,7 @@ std::vector<Candidate> Searcher::expand(const Node& node, int width, bool atRoot
 {
     std::vector<Candidate> candidates;
     for (const Point& point : candidatePoints(node)) {
-        Candidate candidate{point, 0.0, {}};
+        Candidate candidate{point, 0.0, node};
         int captured = 0;
         if (!tryMove(node, point, candidate.child, captured)) {
             continue;

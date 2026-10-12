@@ -453,12 +453,19 @@ void testAILegality()
 
 void testAIFindsCapture()
 {
-    Game game = playSequence({"D5", "E5", "F5", "A1", "E4", "A2"});
+    Game game = playSequence(
+        {"D5", "E5", "D6", "E6", "D7", "E7", "F5", "A1", "F6", "A3", "F7", "J9", "E4", "J1"});
     for (Difficulty level : {Difficulty::Medium, Difficulty::Hard}) {
         std::atomic<bool> stop{false};
         const AIDecision decision = chooseAIMove(game.position(), level, 7.5, 11, stop);
-        expect(decision.move == Move::place(at("E6")), difficultyName(level) + " AI captures a stone in atari");
+        expect(decision.move == Move::place(at("E8")), difficultyName(level) + " AI captures a group in atari");
     }
+
+    Game rescue = playSequence(
+        {"D5", "E5", "D6", "E6", "D7", "E7", "F5", "A1", "F6", "A2", "F7", "A3", "E4"});
+    std::atomic<bool> stop{false};
+    const AIDecision decision = chooseAIMove(rescue.position(), Difficulty::Hard, 7.5, 13, stop);
+    expect(decision.move == Move::place(at("E8")), "Hard AI rescues its stone group from atari");
 }
 
 void testAIStopsWhenCancelled()
@@ -521,8 +528,8 @@ void testEvaluatorBasics()
 void testFullFlow()
 {
     Game game(GameConfig{19, GameMode::PlayerVsAI, Difficulty::Medium});
-    for (const std::string& move : {"D4", "Q16", "Q4", "D16"}) {
-        expect(playAt(game, move).ok(), "flow move " + move);
+    for (const char* move : {"D4", "Q16", "Q4", "D16"}) {
+        expect(playAt(game, move).ok(), std::string("flow move ") + move);
     }
     const std::string saved = SaveManager::serialize(game);
     game.reset();

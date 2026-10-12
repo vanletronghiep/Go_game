@@ -95,11 +95,62 @@ std::vector<Stone> estimateOwnership(const Board& board, int reach)
 
 double estimateScoreMargin(const Board& board, Stone perspective, double komi)
 {
-    const std::vector<Stone> owner = estimateOwnership(board);
-    const auto mine = std::count(owner.begin(), owner.end(), perspective);
-    const auto theirs = std::count(owner.begin(), owner.end(), opponent(perspective));
+    constexpr double influenceWeight[] = {0.0, 0.35, 0.2, 0.1, 0.03};
+    const int size = board.size();
+    const std::vector<int> blackDistance = distanceFrom(board, Stone::Black, 4);
+    const std::vector<int> whiteDistance = distanceFrom(board, Stone::White, 4);
+    const int enclosedLimit = board.area() / 4;
+    std::vector<char> visited(static_cast<std::size_t>(board.area()), 0);
+    double blackArea = board.stoneCount(Stone::Black);
+    double whiteArea = board.stoneCount(Stone::White);
+
+    for (int row = 0; row < size; ++row) {
+        for (int col = 0; col < size; ++col) {
+            if (board.at({row, col}) != Stone::Empty || visited[row * size + col]) {
+                continue;
+            }
+            std::vector<Point> region;
+            std::vector<Point> frontier{{row, col}};
+            visited[row * size + col] = 1;
+            bool touchesBlack = false;
+            bool touchesWhite = false;
+            while (!frontier.empty()) {
+                const Point current = frontier.back();
+                frontier.pop_back();
+                region.push_back(current);
+                for (const Point& next : board.neighbors(current)) {
+                    const Stone stone = board.at(next);
+                    touchesBlack = touchesBlack || stone == Stone::Black;
+                    touchesWhite = touchesWhite || stone == Stone::White;
+                    if (stone == Stone::Empty && !visited[next.row * size + next.col]) {
+                        visited[next.row * size + next.col] = 1;
+                        frontier.push_back(next);
+                    }
+                }
+            }
+
+            const bool enclosed = touchesBlack != touchesWhite && static_cast<int>(region.size()) <= enclosedLimit;
+            if (enclosed) {
+                (touchesBlack ? blackArea : whiteArea) += static_cast<double>(region.size());
+                continue;
+            }
+            for (const Point& point : region) {
+                const int index = point.row * size + point.col;
+                const int black = blackDistance[index];
+                const int white = whiteDistance[index];
+                if (black < white) {
+                    blackArea += influenceWeight[black];
+                } else if (white < black) {
+                    whiteArea += influenceWeight[white];
+                }
+            }
+        }
+    }
+
+    const double mine = perspective == Stone::Black ? blackArea : whiteArea;
+    const double theirs = perspective == Stone::Black ? whiteArea : blackArea;
     const double komiShare = perspective == Stone::White ? komi : -komi;
-    return static_cast<double>(mine - theirs) + komiShare;
+    return mine - theirs + komiShare;
 }
 
 double evaluatePosition(const Board& board, Stone perspective, Stone toMove, int captureBalance, double komi)
@@ -108,7 +159,7 @@ double evaluatePosition(const Board& board, Stone perspective, Stone toMove, int
     for (const GroupSummary& group : summarizeGroups(board)) {
         double groupValue = 0.0;
         if (group.liberties == 1) {
-            groupValue -= group.color == toMove ? 0.6 * group.size : 1.8 * group.size + 1.0;
+            groupValue -= group.color == toMove ? 0.8 * group.size : 2.5 * group.size + 1.5;
         } else if (group.liberties == 2) {
             groupValue -= 0.35 * group.size;
         }
@@ -116,7 +167,7 @@ double evaluatePosition(const Board& board, Stone perspective, Stone toMove, int
         groupValue -= 0.2;
         value += group.color == perspective ? groupValue : -groupValue;
     }
-    return value + 0.5 * captureBalance;
+    return value + captureBalance;
 }
 
 bool isOwnEye(const Board& board, Point point, Stone color)

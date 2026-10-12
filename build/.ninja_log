@@ -1,0 +1,22 @@
+# ninja log v7
+24	1043	8135154828464009	CMakeFiles/gocore.dir/src/Types.cpp.obj	2c94724863f81049
+39	1137	8135154828661827	CMakeFiles/gocore.dir/src/Scoring.cpp.obj	229891274a060406
+35	1349	8135154828661827	CMakeFiles/gocore.dir/src/Position.cpp.obj	24cb078122815c19
+30	1480	8135154828612227	CMakeFiles/gocore.dir/src/Board.cpp.obj	a39f522a5260c4e6
+76	1593	8135154829064428	CMakeFiles/gocore.dir/src/Paths.cpp.obj	1eff961fa7bed3cb
+49	1648	8135154828799012	CMakeFiles/gocore.dir/src/Evaluator.cpp.obj	4b2061acfcbb9c03
+69	2059	8135154828967185	CMakeFiles/gocore.dir/src/Settings.cpp.obj	691f40b12bfc6d09
+43	2188	8135154828661827	CMakeFiles/gocore.dir/src/Game.cpp.obj	7552deb98e7ee6a
+83	2646	8135154829127715	CMakeFiles/GoGame.dir/src/main.cpp.obj	a3dfdd1d41f8c79c
+102	2663	8135154829317842	CMakeFiles/GoGame.dir/src/Theme.cpp.obj	8dd45d880d8cabae
+90	2738	8135154829194303	CMakeFiles/GoGame.dir/src/Audio.cpp.obj	2d0479247203906d
+108	2961	8135154829364082	CMakeFiles/GoGame.dir/src/BoardView.cpp.obj	d482775d35b2c7a9
+96	3086	8135154829283114	CMakeFiles/GoGame.dir/src/Gui.cpp.obj	9ec44398b091505e
+123	5210	8135154829552357	CMakeFiles/GoGame.dir/src/Screens.cpp.obj	50576c28cfce897e
+56	8903	8135154828861975	CMakeFiles/gocore.dir/src/AI.cpp.obj	8863fdc7fb074e56
+130	9753	8135154829617261	CMakeFiles/game_tests.dir/tests/game_tests.cpp.obj	c04d6d47000daac7
+64	9967	8135154828949197	CMakeFiles/gocore.dir/src/SaveManager.cpp.obj	206535353ddc9c4f
+9967	10574	8135154927993846	libgocore.a	2100a3beb9ec1a33
+117	10818	8135154829485556	CMakeFiles/GoGame.dir/src/UI.cpp.obj	7183c6d523ffe761
+10574	10984	8135154934058456	game_tests.exe	815912a3d69552b3
+10818	11180	8135154936501529	GoGame.exe	4cec10696b90e725
