@@ -1,0 +1,10 @@
+# env
+.env
+
+# opencode
+AGENTS.md
+opencode.jsonc
+
+# Python
+__pycache__/
+*.pyc
